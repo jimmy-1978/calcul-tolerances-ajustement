@@ -121,4 +121,21 @@ public class IntervalleDaoImpl implements IntervalleDao {
 
 		}
 	}
+
+	@Override
+	public int deleteAll(Connection connexion) {
+		String stmt = "DELETE FROM intervalle";
+
+		try {
+			Statement statement = connexion.createStatement();
+
+			return statement.executeUpdate(stmt);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return 0;
+
+		}
+	}
 }

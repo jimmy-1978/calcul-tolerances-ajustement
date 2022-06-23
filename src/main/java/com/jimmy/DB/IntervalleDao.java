@@ -15,4 +15,6 @@ public interface IntervalleDao {
 
 	public int create(Connection connexion, Intervalle intervalle);
 
+	public int deleteAll(Connection connexion);
+
 }

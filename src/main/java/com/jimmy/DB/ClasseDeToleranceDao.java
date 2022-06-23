@@ -15,4 +15,6 @@ public interface ClasseDeToleranceDao {
 
 	public int create(Connection connexion, ClasseDeTolerance classeDeTolerance);
 
+	public int deleteAll(Connection connexion);
+
 }
