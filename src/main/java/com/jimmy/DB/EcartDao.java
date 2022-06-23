@@ -15,4 +15,6 @@ public interface EcartDao {
 	public List<Ecart> getAll(Connection connexion);
 
 	public int create(Connection connexion, Ecart ecart);
+
+	public int deleteAll(Connection connexion);
 }

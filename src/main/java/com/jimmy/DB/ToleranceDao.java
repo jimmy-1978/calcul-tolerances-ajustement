@@ -15,4 +15,6 @@ public interface ToleranceDao {
 	public List<Tolerance> getAll(Connection connexion);
 
 	public int create(Connection connexion, Tolerance tolerance);
+
+	public int deleteAll(Connection connexion);
 }

@@ -15,7 +15,7 @@ import com.jimmy.util.Util;
 public abstract class ListeTolerance {
 
 	private static List<Tolerance> listeTolerance = new ArrayList<Tolerance>();
-	private static boolean dBVide = false;
+	private static boolean dbAReinitialiser = false;
 	private static Connection connexion;
 
 	static {
@@ -23,18 +23,41 @@ public abstract class ListeTolerance {
 		// 1°) On établit la connexion
 		ouvrirConnexion();
 
-		// 2°) On recherche la propriété "DBVide", si :
+		// 2°) On recherche la propriété "dbAReinitialiser", si :
 		// - true --> on (ré-)initialise toute la DB
 		// - false --> on accède à la DB via les dao
 
-		dBVide = Boolean.valueOf(Util.recherchePropriete("dBVide"));
-		System.out.println("Status de la property 'dBVide' = " + dBVide);
+		dbAReinitialiser = Boolean.valueOf(Util.recherchePropriete("dbAReinitialiser"));
+		System.out.println("Status de la property 'dbAReinitialiser' = " + dbAReinitialiser);
 
 		// 3°) On charge toutes les Tolerance
 
 		List<String> listeString;
 
-		if (dBVide) {
+		if (dbAReinitialiser) {
+
+			// 1°) On efface les contenus de toutes les tables
+
+			int nbRecordEfface;
+
+			IntervalleDaoImpl intervalleDaoImpl = new IntervalleDaoImpl();
+			nbRecordEfface = intervalleDaoImpl.deleteAll(connexion);
+			System.out.println("Nb records effacés dans table intervalle = " + nbRecordEfface);
+
+			EcartDaoImpl ecartDaoImpl = new EcartDaoImpl();
+			nbRecordEfface = ecartDaoImpl.deleteAll(connexion);
+			System.out.println("Nb records effacés dans table ecart = " + nbRecordEfface);
+
+			ClasseDeToleranceDaoImpl classeDeToleranceDaoImpl = new ClasseDeToleranceDaoImpl();
+			nbRecordEfface = classeDeToleranceDaoImpl.deleteAll(connexion);
+			System.out.println("Nb records effacés dans table classe_de_tolerance = " + nbRecordEfface);
+
+			ToleranceDaoImpl toleranceDaoImpl = new ToleranceDaoImpl();
+			nbRecordEfface = toleranceDaoImpl.deleteAll(connexion);
+			System.out.println("Nb records effacés dans table tolerance = " + nbRecordEfface);
+
+			// 2°) On recharge toutes les données
+
 			listeString = Util.decoupageChaine(tolerancesAlesages1());
 			listeTolerance.addAll(constructionListeTolerance(listeString));
 

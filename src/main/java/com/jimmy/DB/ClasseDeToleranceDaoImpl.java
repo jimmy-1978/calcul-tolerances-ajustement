@@ -117,4 +117,21 @@ public class ClasseDeToleranceDaoImpl implements ClasseDeToleranceDao {
 
 		}
 	}
+
+	@Override
+	public int deleteAll(Connection connexion) {
+		String stmt = "DELETE FROM classe_de_tolerance";
+
+		try {
+			Statement statement = connexion.createStatement();
+
+			return statement.executeUpdate(stmt);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return 0;
+
+		}
+	}
 }
